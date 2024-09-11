@@ -2,6 +2,7 @@
 #include <iostream> 
 #include <string> 
 #include <sstream>
+#include <map>
 using namespace std;
 
 // read ciphertext and dictionary
@@ -24,13 +25,25 @@ string readInput(string fileName){
 }
 
 // compute frequency of each letter in ciphertext and sort them
-/*std::map<char, int> frequency(const std::string &text) {
-    std::map<char, int> freq;
+
+map<char, int> freqq(const string &text) {
+    map<char, int> freq;
     
-        }
+
+  for (char ch : text) {
+        freq[ch]++;
+        
     }
+
+
+   for (const auto& entry : freq) {
+        cout << entry.first << ": " << entry.second << " ";
+    }
+    cout << endl;
+  
     return freq;
-}*/
+}
+    
 // map the sorted frequency of ciphertext letters to the standard English letter frequency
 
 // decrypt the ciphertext
@@ -41,8 +54,10 @@ string readInput(string fileName){
 
 int main() {
 
-  readInput("ciphertext.txt");
+  string cipher = readInput("ciphertext.txt");
 
+  string hello = "Hello";
+  freqq(cipher);
   return 0;
 }
 
