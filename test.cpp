@@ -26,7 +26,11 @@ string readInput(string fileName){
 
 // compute frequency of each letter in ciphertext and sort them
 
-map<char, int> freqq(const string &text) {
+
+    
+// map the sorted frequency of ciphertext letters to the standard English letter frequency
+
+map<char, int> maper(const string &text) {
     map<char, int> freq;
     
 
@@ -35,6 +39,8 @@ map<char, int> freqq(const string &text) {
         
     }
 
+    //vector<pair<char, int>> elems(freq.begin(), freq.end());
+    //sort(elems.begin(), elems.end(), freq);
 
    for (const auto& entry : freq) {
         cout << entry.first << ": " << entry.second << " ";
@@ -43,8 +49,6 @@ map<char, int> freqq(const string &text) {
   
     return freq;
 }
-    
-// map the sorted frequency of ciphertext letters to the standard English letter frequency
 
 // decrypt the ciphertext
 
@@ -57,7 +61,7 @@ int main() {
   string cipher = readInput("ciphertext.txt");
 
   string hello = "Hello";
-  freqq(cipher);
+  maper(cipher);
   return 0;
 }
 
