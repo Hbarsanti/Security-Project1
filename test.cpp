@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-
+string englishFreq = "ETAOINSHRDLCUMWFGYPBVKJXQZ";
 // read ciphertext and dictionary
 string readInput(string fileName){
     ifstream inputFile(fileName);
@@ -44,9 +44,9 @@ vector<pair<char, int>> frequency(const string &text) {
 }
 
 // map the sorted frequency of ciphertext letters to the standard English letter frequency
-map<char, char> mapper(const vector<pair<char, int>> &freq) {
+map<char, char> mapper(const vector<pair<char, int>> &freq, int n) {
+    //string englishFreq = englishFreq.substr(1, englishFreq.length() -1) + englishFreq.front();
     map<char, char> mapping;
-    string englishFreq = "ETAOINSHRDLCUMWFGYPBVKJXQZ";
     for (size_t i = 0; i < freq.size() && i < englishFreq.size(); ++i) {
         mapping[freq[i].first] = englishFreq[i];
     }
@@ -89,17 +89,22 @@ int count(const string &decryptedText, const string &dictionary) {
 // Improve the key by permutation
 
 
-
 int main() {
     string cipher = readInput("ciphertext.txt");
-
+    int n = 0;
+    while( n < 26 ) {
     vector<pair<char, int>> sortedFreq = frequency(cipher);
-    map<char, char> charMapping = mapper(sortedFreq);
+    map<char, char> charMapping = mapper(sortedFreq, n);
     string decryptedText = decrypt(cipher, charMapping);
 
     cout << "Decrypted Text: " << decryptedText << endl;
 
     count(decryptedText, readInput("dictionary.txt"));
+
+    //
+    n++;
+    }
+    
 
     return 0;
 }
