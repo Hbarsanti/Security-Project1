@@ -6,7 +6,6 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-string englishFreq = "ETAOINSHRDLCUMWFGYPBVKJXQZ";
 // read ciphertext and dictionary
 string readInput(string fileName){
     ifstream inputFile(fileName);
@@ -44,8 +43,7 @@ vector<pair<char, int>> frequency(const string &text) {
 }
 
 // map the sorted frequency of ciphertext letters to the standard English letter frequency
-map<char, char> mapper(const vector<pair<char, int>> &freq, int n) {
-    //string englishFreq = englishFreq.substr(1, englishFreq.length() -1) + englishFreq.front();
+map<char, char> mapper(const vector<pair<char, int>> &freq, string englishFreq) {
     map<char, char> mapping;
     for (size_t i = 0; i < freq.size() && i < englishFreq.size(); ++i) {
         mapping[freq[i].first] = englishFreq[i];
@@ -76,30 +74,63 @@ string decrypt(const string &cipher, const map<char, char> &charMapping) {
 int count(const string &decryptedText, const string &dictionary) {
     istringstream dictStream(dictionary);
     string word;
-    int count = 0;
+    int counts = 0;
     // read word from stream and store it into word
     while (dictStream >> word) {
         if (decryptedText.find(word) != string::npos) {
-            count++;
+            counts++;
         }
     }
-    cout << "Number of dictionary words: " << count << endl;
-    return count;
+    cout << "Number of dictionary words: " << counts << endl;
+    return counts;
 }
 // Improve the key by permutation
 
-
+string swapKey(string key, int i, int j) {
+    string newKey = key;
+    char temp = newKey[i];
+    newKey[i] = newKey[j];
+    newKey[j] = temp;
+    return newKey;
+}
 int main() {
+    string englishFreq = "ETAOINSHRDLCUMWFGYPBVKJXQZ";
     string cipher = readInput("ciphertext.txt");
+    int currentWords;
+    int previousWords = 0;
     int n = 0;
+    int m = 0;
+    int k = 1;
     while( n < 26 ) {
+     cout << englishFreq << endl;
     vector<pair<char, int>> sortedFreq = frequency(cipher);
-    map<char, char> charMapping = mapper(sortedFreq, n);
+    map<char, char> charMapping = mapper(sortedFreq, englishFreq);
     string decryptedText = decrypt(cipher, charMapping);
 
     cout << "Decrypted Text: " << decryptedText << endl;
 
-    count(decryptedText, readInput("dictionary.txt"));
+   currentWords = count(decryptedText, readInput("dictionary.txt"));
+   //
+   if (currentWords >= previousWords) {
+       previousWords = currentWords;
+        
+       englishFreq=swapKey(englishFreq, m, k);
+        m++;
+        k++;
+    } else {
+        m--;
+        k--;
+        englishFreq=swapKey(englishFreq, m, k);
+        k++;
+        englishFreq=swapKey(englishFreq, m, k);
+    }
+
+
+    
+    //cout << englishFreq << endl;
+
+
+    //englishFreq = englishFreq.substr(1, englishFreq.length() -1) + englishFreq.front();
 
     //
     n++;
