@@ -2,6 +2,7 @@
     "files.associations": {
         "algorithm": "cpp",
         "map": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "xstring": "cpp"
     }
 }

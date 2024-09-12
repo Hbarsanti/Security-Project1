@@ -36,7 +36,7 @@ vector<pair<char, int>> frequency(const string &text) {
     });
 
     for (const auto& entry : elems) {
-        cout << entry.first << ": " << entry.second << " ";
+        cout << entry.first << ":" << entry.second << " ";
     }
     cout << endl;
 
@@ -52,7 +52,7 @@ map<char, char> mapper(const vector<pair<char, int>> &freq) {
     }
 
     for (const auto& entry : mapping) {
-        cout << entry.first << ": " << entry.second << " ";
+        cout << entry.first << ":" << entry.second << " ";
     }
     cout << endl;
 
@@ -63,7 +63,7 @@ map<char, char> mapper(const vector<pair<char, int>> &freq) {
 string decrypt(const string &cipher, const map<char, char> &charMapping) {
     string decryptedText = cipher;
 
-    for (char ch : entry) {
+    for (char &ch : decryptedText) {
         if (charMapping.find(ch) != charMapping.end()) {
             ch = charMapping.at(ch);
         }
@@ -73,8 +73,22 @@ string decrypt(const string &cipher, const map<char, char> &charMapping) {
 }
 
 // Count the number of dictionary words in the decrypted text
-
+int count(const string &decryptedText, const string &dictionary) {
+    istringstream dictStream(dictionary);
+    string word;
+    int count = 0;
+    // read word from stream and store it into word
+    while (dictStream >> word) {
+        if (decryptedText.find(word) != string::npos) {
+            count++;
+        }
+    }
+    cout << "Number of dictionary words: " << count << endl;
+    return count;
+}
 // Improve the key by permutation
+
+
 
 int main() {
     string cipher = readInput("ciphertext.txt");
@@ -84,6 +98,8 @@ int main() {
     string decryptedText = decrypt(cipher, charMapping);
 
     cout << "Decrypted Text: " << decryptedText << endl;
+
+    count(decryptedText, readInput("dictionary.txt"));
 
     return 0;
 }
