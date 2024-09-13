@@ -32,6 +32,7 @@ vector<pair<char, int>> frequency(const string& text) {
 // map the sorted frequency of ciphertext letters to standard English letter frequency
 map<char, char> createMapping(const vector<pair<char, int>>& freq, const string& englishFreq) {
     map<char, char> mapping;
+    size_t limit = min(freq.size(), englishFreq.size());
     for (size_t i = 0; i < freq.size() && i < englishFreq.size(); ++i) {
         mapping[freq[i].first] = englishFreq[i];
     }
