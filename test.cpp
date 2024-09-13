@@ -120,6 +120,11 @@ int main() {
     cout << "Final decrypted message: " << decryptedText << endl;
     cout << "Total words found: " << maxWordCount << endl;
 
+    for (const auto & elem : charMapping){
+        cout << elem.first << " :" << elem.second << " ";
+    }
+    cout << endl;
+
     //manual key input
     string userInputKey;
     do {
